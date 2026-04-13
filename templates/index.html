@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>すけじゅーる調整くん</title>
+
+    <style>
+        .date-grid{
+            display:grid;
+            grid-template-columns: repeat(7,1fr);
+            gap:8px;
+            max-width:600px;
+        }
+        .date-item{
+            border:1px solid #ccc;
+            padding:8px;
+            text-align:center;
+        }
+        .date-item.土{
+            background-color:#e0f0ff;
+        }
+        .date-item.日{
+            background-color:#ffe0e0;
+        }
+        .date-item input:checkes + span{
+            color:red;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST">
+
+    <h2>スケジュール調整くん</h2>
+    
+
+    <h4>名前</h4>
+    <input type="text" name="username" required><br>
+
+    <h3>空いてる日にちの選択</h3>
+    
+    <div class="date-grid">
+        {% for d in date_info %}
+            <label class="date-item {{d.weekday}}">
+                <input type="checkbox" name="dates" value="{{d.date}}">
+                <span>{{ d.label }}</span>
+            </label>
+        {% endfor %}
+    </div>
+
+  <button type="submit">送信</button>
+
+</form>
+
+    <h4>みんなの回答</h4>
+    
+    <table border="1">
+
+        <tr>
+            <th>名前</th>
+            {% for d in date_list %}
+                <th>{{d}}</th>
+            {% endfor %}
+        </tr>
+
+        {% for r in responses %}
+        <tr>
+            <td>{{r.name}}</td>
+            {% for d in date_list %}
+                <td>
+                    {% if d in r.dates %}
+                        ○
+                    {% else %}
+                        ✗
+                    {% endif %}
+                </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <h2>集まれそうな日</h2>
+
+    {% if best_dates %}
+        <p>
+            {% for d in best_dates %}
+                {{d}}
+            {% endfor %}
+            ({{max_count}}人集まれそう)
+        </p>
+    {% else %}
+        <p>まだデータがありません</p>
+    {% endif %}
+</body>
+</html>
+
+
