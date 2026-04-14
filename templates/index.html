@@ -2,14 +2,27 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>すけじゅーる調整くん</title>
 
     <style>
-        .date-grid{
-            display:grid;
-            grid-template-columns: repeat(7,1fr);
-            gap:8px;
-            max-width:600px;
+        @media (min-width: 600px) {
+            .date-grid{
+                display:grid;
+                grid-template-columns: repeat(3,1fr);
+                gap:8px;
+            }
+        }
+        body {
+            font-size:16px;
+        }
+        button{
+            padding:10px 20px;
+            font-size:16px;
+        }
+        input[type="text"]{
+            width:90%;
+            padding:8px;
         }
         .best{
             border:2px solid red;
