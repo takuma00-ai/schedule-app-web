@@ -11,6 +11,12 @@
             gap:8px;
             max-width:600px;
         }
+        .best{
+            border:2px solid red;
+            font-weight:bold;
+            background-color:#ffeaea;
+            transform:scale(1.05);
+        }
         .date-item{
             border:1px solid #ccc;
             padding:8px;
@@ -22,7 +28,7 @@
         .date-item.日{
             background-color:#ffe0e0;
         }
-        .date-item input:checkes + span{
+        .date-item input:checked + span{
             color:red;
         }
     </style>
@@ -40,7 +46,7 @@
     
     <div class="date-grid">
         {% for d in date_info %}
-            <label class="date-item {{d.weekday}}">
+            <label class="date-item {{d.weekday}} {% if d.date in best_dates %}best{% endif %}">
                 <input type="checkbox" name="dates" value="{{d.date}}">
                 <span>{{ d.label }}</span>
             </label>
