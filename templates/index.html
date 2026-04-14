@@ -27,6 +27,7 @@
             width:90%;
             padding:8px;
         }
+        
         .best{
             border:2px solid red;
             font-weight:bold;
@@ -38,14 +39,35 @@
             padding:8px;
             text-align:center;
         }
-        .date-item.土{
-            background-color:#e0f0ff;
+        .date-item span{
+            display:block;
+            font-weight:bold;
         }
-        .date-item.日{
-            background-color:#ffe0e0;
+        .date-item.土 span {
+            color:blue;
+        }
+        .date-item.日 span {
+            color:red;
         }
         .date-item input:checked + span{
-            color:red;
+            color:rgb(255, 0, 0);
+        }
+        .table-wrap{
+            overflow-x:auto;
+        }
+        table{
+            border-collapse:collapse;
+            min-width:600px;
+        }
+        th,td{
+            border:1px solid #ccc;
+            padding:5px;
+            text-align:center;
+        }
+        th:first-child,td:first-child{
+            position:sticky;
+            left:0;
+            background:white;
         }
     </style>
 </head>
@@ -74,8 +96,10 @@
 </form>
 
     <h4>みんなの回答</h4>
-    
-    <table border="1">
+
+    <div class="table-wrap">
+
+        <table border="1">
 
         <tr>
             <th>名前</th>
@@ -113,6 +137,10 @@
     {% else %}
         <p>まだデータがありません</p>
     {% endif %}
+
+    </div>
+    
+    
 </body>
 </html>
 
