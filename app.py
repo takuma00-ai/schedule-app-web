@@ -1,10 +1,10 @@
-from flask import Flask, render_template,request
+from flask import Flask, render_template,request,url_for,redirect
 import datetime,json
 
 #Json
 #起動時jsonファイから既存のデータの読み込み
 try:
-    with open("date.json","r") as f:
+    with open("data.json","r") as f:
         responses=json.load(f)
 except:
         responses=[]
@@ -56,10 +56,12 @@ def home():
         })
 
             #POST後に保存
-        with open("date.json","w") as f:
+        with open("data.json","w") as f:
             json.dump(responses,f)
 
         print(responses)
+
+        return redirect(url_for("home"))
 
     #人気の日付の集計
     date_count={d:0 for d in date_list}
