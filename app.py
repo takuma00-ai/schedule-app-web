@@ -83,5 +83,5 @@ def home():
         best_dates=best_dates,
         max_count=max_count,
         )
-
-app.run(debug=True)
+if __name__=="__main__":
+    app.run()
