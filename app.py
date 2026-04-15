@@ -1,13 +1,22 @@
 from flask import Flask, render_template,request,url_for,redirect
+from supabase import create_client
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+url=os.getenv("SUPABASE_URL")
+key=os.getenv("SUPABASE_KEY")
+
+print(os.getenv("SUPABASE_URL"))
+
+supabase=create_client(url,key)
+
 import datetime,json
 
 #Json
 #起動時jsonファイから既存のデータの読み込み
-try:
-    with open("data.json","r") as f:
-        responses=json.load(f)
-except:
-        responses=[]
+
 
 
 
@@ -38,11 +47,13 @@ for d in date_list:
 @app.route("/", methods=["GET", "POST"])
 
 def home():
-    #名前と希望日をついかする空リスト
-    global responses
 
     best_dates=[]
     max_count=0
+
+    res=supabase.table("responses").select("*").execute()
+    responses=res.data if res.data else []
+
 
     if request.method=="POST":
         name=request.form.get("username")
@@ -50,14 +61,14 @@ def home():
 
         responses=[r for r in responses if r["name"] != name]
 
-        responses.append({
-            "name":name,
-            "dates":selected_dates
-        })
+        supabase.table("responses").delete().eq("name",name).execute()
+
 
             #POST後に保存
-        with open("data.json","w") as f:
-            json.dump(responses,f)
+        supabase.table("responses").insert({
+            "name":name,
+            "dates":selected_dates
+        }).execute()
 
         print(responses)
 
